@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>تطبيق متجري البسيط</title>
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#f76f79" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="app-header">
+  <h1 id="app-title">فاتورة مبيعات</h1>
+</header>
+
+<main>
+  <!-- صفحة الفاتورة -->
+  <section id="page-invoice" class="app-page">
+
+    <div class="invoice-meta">
+      <span class="invoice-number">فاتورة : <span id="invoice-number">1001</span></span>
+      <span class="invoice-date">بتاريخ : <span id="invoice-date">2026/1/1</span></span>
+    </div>
+
+    <div class="exchange-customer-row">
+      <div class="customer-field-wrap suggestions">
+        <div class="field">
+          <label for="customer-name">مطلوب من السيد</label>
+          <div class="input-with-icon">
+            <input id="customer-name" type="text" autocomplete="off" />
+            <span class="decorative-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div id="customer-suggestions" class="suggestions-list"></div>
+      </div>
+
+      <div class="exchange-field-wrap">
+        <div class="field">
+          <label for="exchange-rate">سعر الصرف</label>
+          <input id="exchange-rate" type="number" inputmode="decimal" min="0" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <div class="field-with-mic" style="margin-bottom:14px;">
+      <div class="suggestions" style="flex:1;">
+        <div class="field" style="margin-bottom:0;">
+          <label for="item-material">المادة</label>
+          <input id="item-material" type="text" autocomplete="off" />
+        </div>
+        <div id="material-suggestions" class="suggestions-list"></div>
+      </div>
+      <button id="item-mic" class="mic-btn" aria-label="بحث صوتي عن مادة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+          <path d="M5 11a7 7 0 0 0 14 0"></path>
+          <line x1="12" y1="18" x2="12" y2="22"></line>
+          <line x1="8" y1="22" x2="16" y2="22"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="qty-price-add-row">
+      <div class="field">
+        <label for="item-qty">الكمية</label>
+        <input id="item-qty" type="number" inputmode="numeric" min="0" step="1" />
+      </div>
+      <div class="field">
+        <label for="item-price">السعر</label>
+        <input id="item-price" type="number" inputmode="decimal" min="0" step="0.01" />
+      </div>
+      <button id="item-add" class="btn">إضافة</button>
+    </div>
+
+    <div id="items-list" class="list-card" style="margin-bottom:18px;"></div>
+
+    <div class="totals-row">
+      <div>
+        <div class="total-label">إجمالي $</div>
+        <input id="total-usd" type="text" readonly />
+      </div>
+      <div>
+        <div class="total-label">إجمالي ل.س</div>
+        <input id="total-syp" type="text" readonly />
+      </div>
+      <div>
+        <div class="total-label">حسم %</div>
+        <input id="discount-input" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="0" />
+      </div>
+    </div>
+
+    <div class="invoice-buttons-row">
+      <button id="invoice-save" class="btn">حفظ</button>
+      <button id="invoice-clear" class="btn btn-secondary">مسح</button>
+      <button id="invoice-new" class="btn btn-secondary">فاتورة جديدة</button>
+    </div>
+  </section>
+
+  <!-- صفحة المواد -->
+  <section id="page-materials" class="app-page">
+    <div class="section-title">إضافة صنف جديد</div>
+
+    <div class="field-with-mic" style="margin-bottom:14px;">
+      <div class="hint-text" style="margin:0;">إملأ الحقول يدويًا أو عن طريق المايك</div>
+      <button id="material-mic" class="mic-btn" aria-label="إدخال صوتي">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+          <path d="M5 11a7 7 0 0 0 14 0"></path>
+          <line x1="12" y1="18" x2="12" y2="22"></line>
+          <line x1="8" y1="22" x2="16" y2="22"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="field">
+      <label for="material-name">اسم المنتج</label>
+      <input id="material-name" type="text" autocomplete="off" />
+    </div>
+
+    <div class="field">
+      <label for="material-price">السعر (سعر الدزينة بالدولار)</label>
+      <input id="material-price" type="number" inputmode="decimal" step="0.01" min="0" autocomplete="off" />
+    </div>
+
+    <div class="btn-row">
+      <button id="material-save" class="btn">حفظ</button>
+      <button id="material-clear" class="btn btn-secondary">مسح</button>
+    </div>
+
+    <div class="section-title">بحث عن مادة</div>
+    <div class="field-with-mic">
+      <div class="field">
+        <input id="material-search" type="text" placeholder="بحث عن مادة" autocomplete="off" />
+      </div>
+      <button id="search-mic" class="mic-btn" aria-label="بحث صوتي">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="2" width="6" height="12" rx="3"></rect>
+          <path d="M5 11a7 7 0 0 0 14 0"></path>
+          <line x1="12" y1="18" x2="12" y2="22"></line>
+          <line x1="8" y1="22" x2="16" y2="22"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="section-title">المواد المخزنة</div>
+    <div id="materials-list" class="list-card"></div>
+  </section>
+
+  <!-- صفحة السجل -->
+  <section id="page-log" class="app-page">
+    <div class="hint-text" style="margin:0 0 16px;">البحث برقم الفاتورة أو اسم الزبون</div>
+
+    <div class="log-search-row">
+      <div class="field">
+        <label for="log-invoice-number">فاتورة</label>
+        <input id="log-invoice-number" type="text" inputmode="numeric" autocomplete="off" />
+      </div>
+      <button id="log-search-btn" class="btn">بحث</button>
+    </div>
+
+    <div class="log-customer-row">
+      <div class="field">
+        <label for="log-customer">الزبون</label>
+        <input id="log-customer" type="text" autocomplete="off" />
+      </div>
+      <button id="log-clear-btn" class="btn btn-secondary">مسح</button>
+    </div>
+
+    <div class="log-results-title">نتائج البحث :</div>
+    <div class="log-results-header">
+      <span class="col-customer">الزبون</span>
+      <span class="col-number">الفاتورة</span>
+      <span class="col-date">التاريخ</span>
+    </div>
+    <div id="log-results"></div>
+
+    <div class="danger-zone">
+      <div class="danger-zone-title">إدارة البيانات</div>
+      <button id="reset-invoices-btn" class="btn btn-danger">حذف كل الفواتير وإعادة الترقيم من 1001</button>
+      <button id="reset-all-btn" class="btn btn-danger">حذف كل البيانات (فواتير، مواد، زبائن)</button>
+    </div>
+  </section>
+
+  <!-- صفحة الـ Report: تُفتح فقط من السجل، بدون رأس أو تنقل سفلي -->
+  <section id="page-report" class="app-page">
+    <div class="report-page">
+      <div class="report-title">فاتورة مبيعات</div>
+      <hr class="report-divider" />
+      <div class="report-meta" id="report-meta"></div>
+      <hr class="report-divider" />
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>المادة</th>
+            <th>الكمية</th>
+            <th>السعر</th>
+            <th>الإجمالي</th>
+          </tr>
+        </thead>
+        <tbody id="report-items"></tbody>
+      </table>
+      <hr class="report-divider" />
+      <div class="report-totals" id="report-totals"></div>
+      <hr class="report-divider" />
+      <div class="report-thanks">شكرًا لزيارتكم</div>
+    </div>
+  </section>
+  </main>
+
+<div id="toast" class="toast"></div>
+
+<nav class="bottom-nav">
+  <button data-page="invoice">فاتورة</button>
+  <button data-page="materials">المواد</button>
+  <button data-page="log">السجل</button>
+</nav>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

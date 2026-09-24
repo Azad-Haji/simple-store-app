@@ -1,0 +1,692 @@
+:root {
+  --color-primary: #f76f79;
+  --color-primary-dark: #df636b;
+  --color-bg: #ffffff;
+  --color-bg-soft: #fafafa;
+  --color-border: #e3e3e3;
+  --color-text: #2c2c2c;
+  --color-text-muted: #9a9a9a;
+  --color-danger: #d3454f;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --nav-height: 64px;
+  --header-height: 96px;
+  --app-max-width: 480px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  /* حجز مساحة شريط التمرير دائمًا حتى لا تتزحزح الصفحة أفقيًا عند التنقل
+     بين تبويبات بأطوال مختلفة (مثلًا صفحة المواد الأطول تُظهر شريطًا
+     بينما صفحة الفاتورة القصيرة لا تُظهره) */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  direction: rtl;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+/* -------------------------------------------------------------------- */
+/* رأس الصفحة                                                            */
+/* -------------------------------------------------------------------- */
+
+.app-header {
+  background: var(--color-primary);
+  color: #fff;
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+}
+
+.app-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------- */
+/* المحتوى                                                               */
+/* -------------------------------------------------------------------- */
+
+.app-page {
+  display: none;
+  padding: 18px 18px calc(var(--nav-height) + 24px);
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+}
+
+.app-page.active {
+  display: block;
+}
+
+.section-title {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 16px;
+  margin: 22px 0 10px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  text-align: right;
+  font-size: 13px;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 15px;
+  color: var(--color-text);
+  background: #fff;
+  text-align: right;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.field-with-mic {
+  display: flex;
+  align-items: center;
+  gap: 215px;
+}
+
+.field-with-mic .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.mic-btn {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mic-btn.listening {
+  background: var(--color-primary-dark);
+}
+
+.mic-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.hint-text {
+  text-align: right;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  margin: -8px 0 14px;
+}
+
+/* أزرار */
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.btn {
+  flex: 1;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 13px 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-primary);
+  cursor: pointer;
+}
+
+.btn:active {
+  background: var(--color-primary-dark);
+}
+
+.btn.btn-secondary {
+  background: var(--color-primary);
+  opacity: 0.9;
+}
+
+/* قائمة المواد / نتائج */
+
+.list-card {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.list-row {
+  display: grid;
+  grid-template-columns: 220px 140px 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
+.list-row .row-name {
+  text-align: right;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-row .row-value {
+  color: var(--color-text-muted);
+  font-size: 15px;
+  text-align: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.delete-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+  padding: 18px 0;
+}
+
+/* اقتراحات (Autocomplete) */
+
+.suggestions {
+  position: relative;
+}
+
+.suggestions-list {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  background: #fff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  display: none;
+}
+
+.suggestions-list.open {
+  display: block;
+}
+
+.suggestions-list div {
+  padding: 10px 14px;
+  text-align: right;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.suggestions-list div:hover,
+.suggestions-list div.active {
+  background: var(--color-bg-soft);
+}
+
+/* -------------------------------------------------------------------- */
+/* صفحة الفاتورة                                                          */
+/* -------------------------------------------------------------------- */
+
+.invoice-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2px 2px 16px;
+}
+
+.invoice-meta .invoice-number {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.invoice-meta .invoice-date {
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
+
+.exchange-customer-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.exchange-customer-row .field {
+  margin-bottom: 0;
+}
+
+.customer-field-wrap {
+  flex: 1;
+}
+
+.exchange-field-wrap {
+  width: 108px;
+  flex-shrink: 0;
+}
+
+.suggestions {
+  position: relative;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.decorative-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.decorative-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.input-with-icon input {
+  padding-left: 38px;
+}
+
+.qty-price-add-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 18px;
+}
+
+.qty-price-add-row .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.qty-price-add-row .btn {
+  flex-shrink: 0;
+  width: 84px;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 1fr 36px 60px 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+.item-row .item-name {
+  text-align: right;
+  font-size: 14.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-row .item-qty,
+.item-row .item-price {
+  text-align: center;
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+}
+
+.totals-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 20px 0 14px;
+}
+
+.totals-row .total-label {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.totals-row input {
+  width: 100%;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 11px 8px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--color-text);
+  background: #fff;
+}
+
+.totals-row input[readonly] {
+  background: var(--color-bg-soft);
+  color: var(--color-text-muted);
+}
+
+.invoice-buttons-row {
+  display: flex;
+  gap: 10px;
+}
+
+.invoice-buttons-row .btn {
+  flex: 1;
+  padding: 13px 6px;
+  font-size: 13.5px;
+}
+
+
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  height: var(--nav-height);
+  display: flex;
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+.bottom-nav button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.bottom-nav button.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* رسالة تأكيد عائمة */
+
+.toast {
+  position: fixed;
+  bottom: calc(var(--nav-height) + 14px);
+  right: 50%;
+  transform: translateX(50%);
+  background: var(--color-text);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------- */
+/* صفحة السجل                                                             */
+/* -------------------------------------------------------------------- */
+
+.log-search-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+
+.log-search-row .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.log-search-row .btn {
+  flex: 0 0 84px;
+}
+
+.log-customer-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 6px;
+}
+
+.log-customer-row .field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.log-customer-row .btn {
+  flex: 0 0 84px;
+}
+
+.log-results-title {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 15px;
+  margin: 22px 0 12px;
+}
+
+.log-result-row {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 13px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.log-result-row .col-customer {
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log-result-row .col-number {
+  text-align: center;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.log-result-row .col-date {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.log-results-header {
+  display: grid;
+  grid-template-columns: 1fr 70px 90px;
+  padding: 0 18px;
+  margin-bottom: 10px;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+}
+
+.log-results-header .col-customer {
+  text-align: right;
+}
+
+.log-results-header .col-number,
+.log-results-header .col-date {
+  text-align: center;
+}
+
+.danger-zone {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1.5px dashed var(--color-border);
+}
+
+.danger-zone-title {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  margin-bottom: 12px;
+}
+
+.btn-danger {
+  display: block;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid var(--color-danger);
+  color: var(--color-danger);
+  margin-bottom: 10px;
+  font-size: 13.5px;
+}
+
+.btn-danger:active {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+/* -------------------------------------------------------------------- */
+/* صفحة الـ Report (إيصال مستقل بدون رأس/تنقل)                              */
+/* -------------------------------------------------------------------- */
+
+body.report-mode .app-header,
+body.report-mode .bottom-nav {
+  display: none;
+}
+
+body.report-mode #page-report {
+  display: block;
+}
+
+.report-page {
+  max-width: 360px;
+  margin: 32px auto;
+  padding: 24px 22px 36px;
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.report-title {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.report-divider {
+  border: none;
+  border-top: 1px dashed var(--color-border);
+  margin: 12px 0;
+}
+
+.report-meta div {
+  display: flex;
+  justify-content: flex-start;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0;
+  font-size: 13.5px;
+}
+
+.report-table th {
+  font-weight: 700;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.report-table th:last-child,
+.report-table td:last-child {
+  text-align: right;
+}
+
+.report-table td {
+  padding: 4px 2px;
+  text-align: center;
+}
+
+.report-totals div {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+
+.report-totals .report-net {
+  font-weight: 700;
+}
+
+.report-thanks {
+  text-align: center;
+  color: var(--color-text-muted);
+  margin-top: 18px;
+}
