@@ -84,16 +84,16 @@
 
     <div class="totals-row">
       <div>
-        <div class="total-label">إجمالي $</div>
-        <input id="total-usd" type="text" readonly />
+        <div class="total-label">حسم %</div>
+        <input id="discount-input" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="0" />
       </div>
       <div>
         <div class="total-label">إجمالي ل.س</div>
         <input id="total-syp" type="text" readonly />
       </div>
       <div>
-        <div class="total-label">حسم %</div>
-        <input id="discount-input" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="0" />
+        <div class="total-label">إجمالي $</div>
+        <input id="total-usd" type="text" readonly />
       </div>
     </div>
 
@@ -184,8 +184,10 @@
 
     <div class="danger-zone">
       <div class="danger-zone-title">إدارة البيانات</div>
-      <button id="reset-invoices-btn" class="btn btn-danger">حذف كل الفواتير وإعادة الترقيم من 1001</button>
-      <button id="reset-all-btn" class="btn btn-danger">حذف كل البيانات (فواتير، مواد، زبائن)</button>
+      <div class="danger-zone-buttons">
+        <button id="reset-invoices-btn" class="btn btn-danger">حذف كل الفواتير</button>
+        <button id="reset-all-btn" class="btn btn-danger">حذف كل البيانات</button>
+      </div>
     </div>
   </section>
 
